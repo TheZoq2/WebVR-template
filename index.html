@@ -30,7 +30,7 @@ body {
 WebVRConfig = {
 
   // Forces availability of VR mode.
-  FORCE_ENABLE_VR: false, // Default: false.
+  FORCE_ENABLE_VR: true, // Default: false.
 };
 </script>
 
@@ -43,7 +43,7 @@ WebVRConfig = {
   three.js 3d library
   -->
 <script src="node_modules/three/three.min.js"></script>
-<script src="node_modules/three/src/loaders/OBJLoader.js"></script>
+<script src="node_modules/three/examples/js/loaders/OBJLoader.js"></script>
 
 <!--
   VRControls.js acquires positional information from connected VR devices and applies the transformations to a three.js camera object.

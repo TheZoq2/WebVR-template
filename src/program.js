@@ -2,6 +2,9 @@
 var scene;
 var camera;
 
+var monkey;
+var monkeyLoaded = false;
+
 function main()
 {
     // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
@@ -32,22 +35,36 @@ function main()
     loader.load('img/box.png', onTextureLoaded);
 
     // model
+    
+    var monkeyPos = new THREE.Vector3(0,1,0);
 
     var loader = new THREE.OBJLoader( manager );
-    loader.load( 'obj/male02/male02.obj', function ( object ) {
-
+    loader.load( 'media/monkey.obj', function ( object ) {
             object.traverse( function ( child ) {
 
                 if ( child instanceof THREE.Mesh ) {
 
-                    child.material.map = texture;
+                    //child.material.map = texture;
+                    child.material = new THREE.MeshPhongMaterial( { 
+                            color: 0x333333, 
+                            specular: 0x333333, 
+                            shininess: 50
+                        })
 
                 }
 
             } );
 
-            object.position.y = - 95;
-            scene.add( object );
+            object.scale.set(0.3, 0.3, 0.3);
+
+            //object.position.x = 1;
+            object.position.copy(monkeyPos);
+            //object.position.set(monkeyPos);
+            //object.position.set(0,1,0);
+
+            monkey = object;
+            monkeyLoaded = true;
+            scene.add( monkey );
 
         }, function(){}, function(){} );
 
@@ -102,6 +119,13 @@ function main()
 
         // Apply rotation to cube mesh
         cube.rotation.y += delta * 0.0006;
+
+        if(monkeyLoaded)
+        {
+            monkey.rotation.x += delta * 0.0006;
+            monkey.rotation.y += delta * 0.0006;
+            monkey.rotation.z += delta * 0.0006;
+        }
 
         // Update VR headset position and apply to camera.
         controls.update();
